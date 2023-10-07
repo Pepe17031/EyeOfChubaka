@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Eye_of_Chubaka.urls'
+ROOT_URLCONF = 'django_config.urls'
 
 TEMPLATES = [
     {
