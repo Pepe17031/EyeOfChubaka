@@ -1,11 +1,50 @@
-version: '3'
+version: '3.8'
 
 services:
-  web:
+
+  django:
     build: .
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-    container_name: eye_of_chubaka
+    container_name: django
+    command: >
+      bash -c "
+        python manage.py makemigrations &&
+        python manage.py migrate &&
+        python manage.py runserver 0.0.0.0:8000"
     volumes:
-      - .:/eye_of_chubaka
+      - .:/django
     ports:
       - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=django_db
+      - POSTGRES_USER=pepe
+      - POSTGRES_PASSWORD=000000
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:latest
+
+  celery_worker:
+    build:
+      context: .
+    container_name: celery_worker
+    command: celery -A django_config worker -l INFO
+    environment:
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis
+      - postgres
+
+
+volumes:
+  postgres_data:

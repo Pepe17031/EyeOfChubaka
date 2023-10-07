@@ -1,1 +1,8 @@
 django
+psycopg2
+channels
+daphne
+channels-redis
+redis
+django_celery_beat
+flower

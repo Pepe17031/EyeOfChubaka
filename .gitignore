@@ -1,6 +1,5 @@
 # Мои исключения
 .idea
-db.sqlite3
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -116,7 +115,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+.env_open
 .venv
 env/
 venv/
