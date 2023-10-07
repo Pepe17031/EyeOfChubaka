@@ -14,6 +14,10 @@ WORKDIR /eye_of_chubaka
 # Копируем содержимое текущего каталога в контейнер в /eye_of_chubaka
 ADD . /eye_of_chubaka/
 
+COPY ./flower /start-flower
+RUN sed -i 's/\r$//g' /start-flower
+RUN chmod +x /start-flower
+
 # Устанавливаем необходимые пакеты из requirements.txt
 RUN pip install -r requirements.txt
 

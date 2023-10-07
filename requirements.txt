@@ -6,3 +6,4 @@ channels-redis
 redis
 django_celery_beat
 flower
+celery
