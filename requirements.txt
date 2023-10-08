@@ -1,9 +1,11 @@
 django
 psycopg2
-channels
+
 daphne
+channels
 channels-redis
-redis
+
+celery
 django_celery_beat
 flower
-celery
+redis

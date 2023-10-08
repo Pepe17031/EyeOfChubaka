@@ -2,8 +2,19 @@ version: '3.8'
 
 services:
 
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - django
+
   django:
-    build: .
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
     container_name: django
     command: >
       bash -c "
@@ -18,26 +29,12 @@ services:
       - postgres
       - redis
 
-  postgres:
-    image: postgres:latest
-    container_name: postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_DB=django_db
-      - POSTGRES_USER=pepe
-      - POSTGRES_PASSWORD=000000
-    ports:
-      - "5432:5432"
-
-  redis:
-    image: redis:latest
-
   celery_worker:
     build:
       context: .
+      dockerfile: ./docker/Dockerfile
     container_name: celery_worker
-    command: celery -A django_config worker -l INFO
+    command: /start-worker
     environment:
       - CELERY_BROKER=redis://redis:6379/0
       - CELERY_BACKEND=redis://redis:6379/0
@@ -48,8 +45,9 @@ services:
   celery_beat:
     build:
       context: .
+      dockerfile: ./docker/Dockerfile
     container_name: celery_beat
-    command: celery -A django_config beat -l INFO
+    command: /start-beat
     depends_on:
       - redis
       - postgres
@@ -57,7 +55,8 @@ services:
   celery_flower:
     build:
       context: .
-    container_name: /celery_flower
+      dockerfile: ./docker/Dockerfile
+    container_name: celery_flower
     command: /start-flower
     volumes:
       - .:/django
@@ -65,10 +64,28 @@ services:
       - CELERY_BROKER=redis://redis:6379/0
       - CELERY_BACKEND=redis://redis:6379/0
     ports:
-      - "5557:5555"
+      - "5555:5555"
     depends_on:
       - redis
       - postgres
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=django_db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
 
 volumes:
   postgres_data:
