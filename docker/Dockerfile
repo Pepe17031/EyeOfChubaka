@@ -1,7 +1,6 @@
-FROM python:3.10
+FROM python:3.10-alpine
 
 ENV PYTHONUNBUFFERED 1
-ENV PYTHONDONTWRITEBYTECODE 1
 
 # Создаем корневой каталог для нашего проекта в контейнере
 RUN mkdir /eye_of_chubaka
