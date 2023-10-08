@@ -2,6 +2,8 @@ FROM python:3.10-alpine
 
 ENV PYTHONUNBUFFERED 1
 
+RUN apk update && apk add bash
+
 # Создаем корневой каталог для нашего проекта в контейнере
 RUN mkdir /eye_of_chubaka
 
@@ -32,4 +34,9 @@ COPY ./docker/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
 
-ENTRYPOINT ["/entrypoint"]
+
+
+RUN ls -la /  # Покажет содержимое корневого каталога
+RUN ls -la /eye_of_chubaka/  # Покажет содержимое каталога проекта
+RUN cat /entrypoint  # Выведет содержимое entrypoint
+
