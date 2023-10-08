@@ -1,11 +1,14 @@
 from binance import ThreadedDepthCacheManager
 import psycopg2 as pg
 import pandas as pd
+import sys
 
 
 def main():
 
-    coin_symbol = "BTCUSDT"
+    coin_symbol = sys.argv[1]
+    print(coin_symbol)
+
     try:
         conn = pg.connect(
             host='db',
