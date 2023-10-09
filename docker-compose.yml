@@ -69,6 +69,17 @@ services:
       - redis
       - postgres
 
+  frontend:
+    build:
+      context: ./frontend/
+      dockerfile: ./Dockerfile
+    container_name: frontend
+    command: /start-web-pack
+    volumes:
+      - .:/eye_of_chubaka
+    depends_on:
+      - django
+
   postgres:
     image: postgres:latest
     container_name: postgres

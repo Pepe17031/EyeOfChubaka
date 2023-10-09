@@ -27,6 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'api.apps.ApiConfig',
+    'frontend.apps.FrontendConfig'
 ]
 
 MIDDLEWARE = [
@@ -68,7 +70,7 @@ DATABASES = {
         'NAME': 'django_db',
         'USER': 'user',
         'PASSWORD': 'password',
-        'HOST': 'postgres',
+        'HOST': 'postgres',  # Docker version
         'PORT': '5432',
     }
 }
@@ -119,15 +121,20 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
+            "hosts": [("redis", 6379)],
         },
     },
 }
 
 # Celery settings
-CELERY_BROKER_URL = "redis://127.0.0.1:6379"
-CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379"
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
 
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
-CELERY_BEAT_SCHEDULE = {}
+CELERY_BEAT_SCHEDULE = {
+    "send_message_to_channels": {
+        "task": "api.tasks.send_message_to_channels",
+        "schedule": 10.0
+    },
+}

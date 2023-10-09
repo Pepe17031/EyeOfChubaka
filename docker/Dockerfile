@@ -16,7 +16,6 @@ ADD . /eye_of_chubaka/
 # Устанавливаем необходимые пакеты из requirements.txt
 RUN pip install -r requirements.txt
 
-
 COPY ./docker/celery/start-worker /start-worker
 RUN sed -i 's/\r$//g' /start-worker
 RUN chmod +x /start-worker
@@ -34,9 +33,4 @@ COPY ./docker/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
 
-
-
-RUN ls -la /  # Покажет содержимое корневого каталога
-RUN ls -la /eye_of_chubaka/  # Покажет содержимое каталога проекта
-RUN cat /entrypoint  # Выведет содержимое entrypoint
-
+ENTRYPOINT ["/entrypoint"]

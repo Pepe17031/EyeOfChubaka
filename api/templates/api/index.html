@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Api Viewer</title>
+  <!-- Bulma styles -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+</head>
+<body>
+  <section class="section">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-6 is-offset-3">
+          <div id="message_boby"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    // Создаем объект WebSocket. При его создании
+    // автоматически происходит попытка открыть соединение с сервером.
+    const ws = new WebSocket(
+      'ws://' + window.location.host + '/ws/api/'
+    )
+    /**
+     * Добавляет шутку в начало содержимого элемента с идентификатором #jokes.
+     * @param {string} message - Текст шутки.
+     */
+    const addJoke = (message) => {
+      document.querySelector('#message_boby').innerHTML = `
+        <article class="message is-success">
+          <div class="message-header">
+            <p>Joke</p>
+          </div>
+          <div class="message-body">${message}</div>
+        </article>
+      ` + document.querySelector('#message_boby').innerHTML
+    }
+    // Событие срабатывает при получении сообщения от сервера.
+    ws.onmessage = (event_) => {
+      const joke = event_.data
+      addJoke(joke)
+    }
+    // Событие срабатывает при закрытии соединения.
+    ws.onclose = (event_) => {
+      console.error('Api socket closed')
+    }
+  </script>
+</body>
+</html>

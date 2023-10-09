@@ -3,7 +3,7 @@ psycopg2-binary
 daphne
 channels
 channels-redis
-
+djangorestframework
 celery
 django_celery_beat
 flower
