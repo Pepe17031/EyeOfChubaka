@@ -8,3 +8,24 @@ https://docs.docker.com/engine/install/ubuntu/
 docker run --rm --name coin_watcher --network db_net coin_watcher ETHUSDT
 
 docker build -t coin_watcher . 
+
+
+
+        .pipe(webpack({
+            mode: "development",
+                module: {
+                rules: [
+                    {
+                        test: /\.js$/,
+                        exclude: /node_modules/,
+                        use: {
+                            loader: "babel-loader",
+                        },
+                    }
+                ],
+            },
+            optimization: {
+                minimize: true,
+            }
+
+        }))

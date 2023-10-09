@@ -2,10 +2,10 @@ const path = require("path");
 const webpack = require("webpack");
 
 module.exports = {
-    entry: "./src/index.js",
+    entry: "./src/index.frontend",
     output: {
         path: path.resolve(__dirname, "./static/frontend"),
-        filename: "[name].js",
+        filename: "[name].min.frontend",
     },
     module: {
         rules: [
@@ -15,15 +15,7 @@ module.exports = {
                 use: {
                     loader: "babel-loader",
                 },
-            },
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
-            },
-            {
-                test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
-                use: ["file-loader"]
-            },
+            }
         ],
     },
     optimization: {

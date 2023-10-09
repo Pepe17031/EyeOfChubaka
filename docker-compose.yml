@@ -4,6 +4,7 @@ services:
 
   nginx:
     image: nginx:latest
+    container_name: nginx
     ports:
       - "80:80"
     volumes:
@@ -40,7 +41,7 @@ services:
       - CELERY_BACKEND=redis://redis:6379/0
     depends_on:
       - redis
-      - postgres
+      - django
 
   celery_beat:
     build:
@@ -49,8 +50,7 @@ services:
     container_name: celery_beat
     command: /start-beat
     depends_on:
-      - redis
-      - postgres
+      - celery_worker
 
   celery_flower:
     build:
@@ -66,19 +66,7 @@ services:
     ports:
       - "5555:5555"
     depends_on:
-      - redis
-      - postgres
-
-  frontend:
-    build:
-      context: ./frontend/
-      dockerfile: ./Dockerfile
-    container_name: frontend
-    command: /start-web-pack
-    volumes:
-      - .:/eye_of_chubaka
-    depends_on:
-      - django
+      - celery_beat
 
   postgres:
     image: postgres:latest
