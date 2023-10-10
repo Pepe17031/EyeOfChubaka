@@ -154,7 +154,8 @@ exports.default = series(
     html,
     vendor,
     parallel(data, fonts, images, javascript, css, base_css),
-    parallel(watchFiles, initBrowserSync)
+    parallel(watchFiles),
+    //parallel(watchFiles, initBrowserSync)
 );
 
 exports.build = series(

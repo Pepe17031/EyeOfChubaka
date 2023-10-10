@@ -133,8 +133,8 @@ CELERY_RESULT_BACKEND = "redis://redis:6379"
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
 CELERY_BEAT_SCHEDULE = {
-    "send_message_to_channels": {
-        "task": "api.tasks.send_message_to_channels",
+    "send_depth_to_channels": {
+        "task": "api.tasks.send_depth_data",
         "schedule": 10.0
     },
 }

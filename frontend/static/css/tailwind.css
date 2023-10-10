@@ -482,6 +482,9 @@ video {
 .mb-10{
   margin-bottom: 2.5rem !important;
 }
+.ml-8{
+  margin-left: 2rem !important;
+}
 .block{
   display: block !important;
 }
@@ -515,6 +518,9 @@ video {
 .h-fit{
   height: -moz-fit-content !important;
   height: fit-content !important;
+}
+.max-h-96{
+  max-height: 24rem !important;
 }
 .w-10{
   width: 2.5rem !important;
@@ -577,6 +583,9 @@ video {
 }
 .overflow-x-auto{
   overflow-x: auto !important;
+}
+.overflow-y-auto{
+  overflow-y: auto !important;
 }
 .whitespace-nowrap{
   white-space: nowrap !important;
@@ -702,6 +711,10 @@ video {
 }
 .align-middle{
   vertical-align: middle !important;
+}
+.text-3xl{
+  font-size: 1.875rem !important;
+  line-height: 2.25rem !important;
 }
 .text-4xl{
   font-size: 2.25rem !important;
