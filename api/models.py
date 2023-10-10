@@ -3,7 +3,7 @@ from django.db import models
 
 # Create your models here.
 class Depth(models.Model):
-    symbol = models.CharField(max_length=12, default="", unique=True)
+    symbol = models.CharField(max_length=12, default="", unique=True, primary_key=True)
 
     total_asks_volume = models.IntegerField(default=0)
     total_bids_volume = models.IntegerField(default=0)

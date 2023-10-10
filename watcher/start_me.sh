@@ -7,6 +7,6 @@ echo "${pair_array[@]}"
 
 for pair in "${pair_array[@]}"; do
   container_name="coin_watcher_${pair}"
-  docker run --rm --name "$container_name" --network db_net coin_watcher "$pair" &
+  docker run --rm --name "$container_name" --network eye_of_chubaka_default coin_watcher "$pair" &
 
 done
