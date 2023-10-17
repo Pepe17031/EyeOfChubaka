@@ -8,3 +8,4 @@ celery
 django_celery_beat
 flower
 redis
+requests

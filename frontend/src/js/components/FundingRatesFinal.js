@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import '/static/css/tailwind.css'
 
 
-function DepthTable() {
+function FundingRatesFinal() {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true); // Добавлено состояние для отслеживания загрузки
 
   useEffect(() => {
-    const socket = new WebSocket('ws://' + window.location.host + '/ws/depth/');
+    const socket = new WebSocket('ws://' + window.location.host + '/ws/funding-final/');
 
     socket.addEventListener('open', () => {
       console.log('WebSocket connected.');
@@ -45,20 +45,18 @@ function DepthTable() {
   }, []);
 
   const tableHeaders = [
-    'Symbol',
-    'Total Asks Volume',
-    'Total Bids Volume',
-    'Limit3',
-    'Limit5',
-    'Limit8',
-    'Limit30',
+    'Label',
+    'Binance+',
+    'Binance0',
+    'Binance-',
+    'Other_ex+',
+    'Other_ex0',
+    'Other_ex-',
   ];
 
   return (
 
     <div className="shadow-md bg-white rounded-lg h-fit">
-
-
         <div className="p-4" > {/*All table form*/}
             <div className="overflow-x-auto">
                 <div className="min-w-full inline-block align-middle">
@@ -75,7 +73,7 @@ function DepthTable() {
                                 </div>
                             </div>
 
-                            <div className="px-6 py-3 text-left text-2xl text-red-700 font-extrabold uppercase ">Market Depth Table</div>
+                            <div className="px-6 py-3 text-left text-2xl text-red-700 font-extrabold uppercase ">Final Funding Rates Table</div>
 
                         </div> {/*Seach field*/}
 
@@ -112,13 +110,28 @@ function DepthTable() {
                                                 <label htmlFor="table-pagination-checkbox-1" className="sr-only">Checkbox</label>
                                             </div>
                                         </td>
+
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 text-left">{item.symbol}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">{item.total_asks_volume}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">{item.total_bids_volume}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">{parseFloat(item.limit3).toFixed(2)}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">{parseFloat(item.limit5).toFixed(2)}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">{parseFloat(item.limit8).toFixed(2)}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">{parseFloat(item.limit30).toFixed(2)}</td>
+
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">
+                                            {item.binance_negative === 0 ? '-' : `${item.binance_negative}`}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">
+                                            {item.binance_balance === 0 ? '-' : `${item.binance_balance}`}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">
+                                            {item.binance_positive === 0 ? '-' : `${item.binance_positive}`}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">
+                                            {item.other_ex_negative === 0 ? '-' : `${item.other_ex_negative}`}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">
+                                            {item.other_ex_balance === 0 ? '-' : `${item.other_ex_balance}`}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">
+                                            {item.other_ex_positive === 0 ? '-' : `${item.other_ex_positive}`}
+                                        </td>
+
                                     </tr>
                                 ))}
                                 </tbody>
@@ -136,4 +149,4 @@ function DepthTable() {
   );
 }
 
-export default DepthTable;
+export default FundingRatesFinal;

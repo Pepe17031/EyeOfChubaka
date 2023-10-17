@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import '/static/css/tailwind.css'
 
 
-function DepthTable() {
+function FundingRates() {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true); // Добавлено состояние для отслеживания загрузки
 
   useEffect(() => {
-    const socket = new WebSocket('ws://' + window.location.host + '/ws/depth/');
+    const socket = new WebSocket('ws://' + window.location.host + '/ws/funding/');
 
     socket.addEventListener('open', () => {
       console.log('WebSocket connected.');
@@ -45,13 +45,16 @@ function DepthTable() {
   }, []);
 
   const tableHeaders = [
+    'ExchangeLogo',
     'Symbol',
-    'Total Asks Volume',
-    'Total Bids Volume',
-    'Limit3',
-    'Limit5',
-    'Limit8',
-    'Limit30',
+    'Binance',
+    'OKX',
+    'dYdX',
+    'Bybit',
+    'Gate',
+    'Bitget',
+    'CoinEx',
+    'BingX',
   ];
 
   return (
@@ -75,7 +78,7 @@ function DepthTable() {
                                 </div>
                             </div>
 
-                            <div className="px-6 py-3 text-left text-2xl text-red-700 font-extrabold uppercase ">Market Depth Table</div>
+                            <div className="px-6 py-3 text-left text-2xl text-red-700 font-extrabold uppercase ">Funding Rates Table</div>
 
                         </div> {/*Seach field*/}
 
@@ -112,13 +115,42 @@ function DepthTable() {
                                                 <label htmlFor="table-pagination-checkbox-1" className="sr-only">Checkbox</label>
                                             </div>
                                         </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 text-left">
+                                            <img
+                                                src={item.exchangeLogo}
+                                                alt="Exchange Logo"
+                                                className="max-w-[32px] max-h-[32px]"
+                                                width="32"
+                                                height="32"
+                                            />
+                                        </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 text-left">{item.symbol}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">{item.total_asks_volume}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">{item.total_bids_volume}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">{parseFloat(item.limit3).toFixed(2)}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">{parseFloat(item.limit5).toFixed(2)}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">{parseFloat(item.limit8).toFixed(2)}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">{parseFloat(item.limit30).toFixed(2)}</td>
+
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">
+                                            {item.binance_funding === 0 ? '-' : `${item.binance_funding}%`}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">
+                                            {item.okx_funding === 0 ? '-' : `${item.okx_funding}%`}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">
+                                            {item.dydx_funding === 0 ? '-' : `${item.dydx_funding}%`}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">
+                                            {item.bybit_funding === 0 ? '-' : `${item.bybit_funding}%`}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">
+                                            {item.gate_funding === 0 ? '-' : `${item.gate_funding}%`}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">
+                                            {item.bitget_funding === 0 ? '-' : `${item.bitget_funding}%`}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">
+                                            {item.coinex_funding === 0 ? '-' : `${item.coinex_funding}%`}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-left">
+                                            {item.bingx_funding === 0 ? '-' : `${item.bingx_funding}%`}
+                                        </td>
+
                                     </tr>
                                 ))}
                                 </tbody>
@@ -136,4 +168,4 @@ function DepthTable() {
   );
 }
 
-export default DepthTable;
+export default FundingRates;

@@ -137,4 +137,16 @@ CELERY_BEAT_SCHEDULE = {
         "task": "api.tasks.send_depth_data",
         "schedule": 10.0
     },
+    "get_funding_rate": {
+        "task": "api.tasks.get_funding_rate",
+        "schedule": 10.0
+    },
+    "send_funding_rate": {
+        "task": "api.tasks.send_funding_rate",
+        "schedule": 10.0
+    },
+    "send_funding_final_rate": {
+        "task": "api.tasks.send_funding_rate_final",
+        "schedule": 10.0
+    },
 }
